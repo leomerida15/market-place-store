@@ -1,0 +1,26 @@
+###
+GET http://localhost:5050/typeProfile
+
+###
+GET http://localhost:5050/typeProfile/7
+
+###
+DELETE http://localhost:5050/typeProfile/1
+
+###
+POST http://localhost:5050/typeProfile
+Content-Type: application/json
+
+{
+    "descript":"vendedor"
+}
+
+###
+PATCH http://localhost:5050/typeProfile/2
+Content-Type: application/json
+
+{
+    "firstname":"leo aaa",
+    "lastname":"merida aaa"
+}
+
