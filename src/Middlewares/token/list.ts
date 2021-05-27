@@ -1,3 +1,3 @@
-const list: Array<any> = [''];
+const list: Array<any> = [];
 
 export default list;

@@ -2,7 +2,7 @@
 import { Request, Response, NextFunction } from 'express';
 import jwt from 'jsonwebtoken';
 import list from './list';
-const Key: string = process.env.KEY || 'user';
+const Key: string = process.env.KEY || 'clave';
 
 /** this middleware is for convert json web token in Objet format */
 export default (req: Request, res: Response, next: NextFunction) => {

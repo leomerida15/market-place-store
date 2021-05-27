@@ -12,9 +12,9 @@ POST http://localhost:5050/user
 Content-Type: application/json
 
 {
-    "email":"vendedor@leo.com",
+    "email":"comprador@leo.com",
     "password":"123456",
-    "typeProfile":2
+    "typeProfile":1
 }
 
 ###
@@ -22,7 +22,7 @@ POST http://localhost:5050/login
 Content-Type: application/json
 
 {
-    "email":"leo3@leo.com",
+    "email":"comprador@leo.com",
     "password":"123456"
 }
 
