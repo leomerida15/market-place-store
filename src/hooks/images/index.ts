@@ -1,6 +1,6 @@
 import fs from 'fs/promises';
 import path from 'path';
-import { host } from './host';
+import { host } from '../host';
 import { svg2png, SVG2PNGOptions } from 'svg-png-converter';
 
 const base: string = path.resolve('static');

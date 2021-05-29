@@ -2,6 +2,7 @@ import { NextFunction, Request, Response } from 'express';
 import { Product } from '../db/models';
 import * as intf from '../config/interfaces';
 import * as Msg from '../hooks/messages/index.ts';
+import { ImgIDs, ImgMoves, ImgRoutes } from '../hooks/images';
 
 // getters all Products
 export const getProducts = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
@@ -15,9 +16,24 @@ export const getProducts = async (req: Request, res: Response, next: NextFunctio
 };
 
 // getter a Product
-export const createProduct = async (req: Request<any, intf.Product>, res: Response, next: NextFunction): Promise<void> => {
+export const createProduct = async (req: Request<any, any, intf.Product>, res: Response, next: NextFunction): Promise<void> => {
 	try {
-		const info: intf.Product = await Product.create(req.body);
+		const imgs: string[] = await (async () => {
+			if (req.files) {
+				const routesIMG: string[] = ImgRoutes(req.files, 'zones');
+				const ids = ImgIDs(routesIMG);
+				//
+				const urls: string[] = await ImgMoves(ids, 'zones');
+
+				return urls;
+			} else {
+				return [];
+			}
+		})();
+
+		const data: intf.Product = { ...req.body, imgs };
+
+		const info: intf.Product = await Product.create(data);
 
 		res.status(200).json({ msg: Msg.Product(info.id).create, info });
 	} catch (err) {

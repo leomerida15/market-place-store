@@ -18,7 +18,7 @@ export interface Product extends db {
 	subType: number;
 	name: string;
 	price: number;
-	img: string;
+	imgs?: string[];
 }
 
 export interface Type extends db {

@@ -2,7 +2,7 @@ import Sql from '../connections';
 import { DataTypes } from 'sequelize';
 
 export default () => {
-	const { INTEGER, STRING } = DataTypes;
+	const { INTEGER, STRING, ARRAY } = DataTypes;
 
 	return Sql.define(
 		'Product',
@@ -12,7 +12,7 @@ export default () => {
 			name: { type: STRING, allowNull: false },
 			price: { type: INTEGER, allowNull: false },
 			user: { type: INTEGER, allowNull: false },
-			img: { type: STRING, allowNull: false },
+			imgs: { type: ARRAY(STRING), allowNull: false },
 		},
 		{ freezeTableName: true, timestamps: true }
 	);

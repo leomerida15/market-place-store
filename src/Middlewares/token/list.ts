@@ -1,3 +1,3 @@
-const list: Array<any> = [];
+const list: string[] = ['user', 'type', 'subType', 'typeProfile'];
 
-export default list;
+export default [''];
