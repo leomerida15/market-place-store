@@ -1,4 +1,3 @@
-import { DataTypes } from 'sequelize';
 import sequelize from './connections';
 import init_models from './models';
 import keys from './keys';
@@ -18,7 +17,7 @@ sequelize.sync({ force }).then(async (resp: any) => {
 	if (resp) console.log('Init DB SUCCESS');
 	else console.log('Init DB err');
 	//
-	// if (force) pre_into(model);
+	if (force) pre_into(model);
 });
 
 export default model;

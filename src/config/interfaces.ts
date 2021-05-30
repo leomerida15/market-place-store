@@ -11,6 +11,7 @@ export interface db {
 export interface User extends db {
 	email: string;
 	password: string;
+	typeProfile: number;
 }
 
 export interface Product extends db {

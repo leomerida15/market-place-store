@@ -6,24 +6,6 @@ import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 const key: string = 'clave';
 
-// login
-export const login = async (req: Request<any, intf.User, intf.User>, res: Response, next: NextFunction): Promise<void> => {
-	try {
-		const { password, email } = req.body;
-
-		const info: intf.User = await User.findOne({ email });
-
-		const valid: boolean = await bcrypt.compare(password, info.password);
-		if (!valid) throw { message: 'contraseña incorrecta' };
-
-		const token: string = jwt.sign({ email, id: info.id }, key);
-
-		res.status(200).json({ msg: Msg.User(info.id).login, info: { email, id: info.id }, token });
-	} catch (err) {
-		next(err);
-	}
-};
-
 // getters all users
 export const getUsers = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
 	try {

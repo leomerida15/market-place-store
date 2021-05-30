@@ -7,5 +7,5 @@ export default () => {
 	Type.hasMany(SubType, { foreignKey: 'type', onDelete: 'cascade', hooks: true });
 	SubType.hasMany(Product, { foreignKey: 'subType', onDelete: 'cascade', hooks: true });
 	User.hasMany(Product, { foreignKey: 'user', onDelete: 'cascade', hooks: true });
-	TypeProfile.hasMany(User, { foreignKey: 'typeProfile' });
+	TypeProfile.hasMany(User, { foreignKey: 'typeProfile', onDelete: 'cascade', hooks: true });
 };
