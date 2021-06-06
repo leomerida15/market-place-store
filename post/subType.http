@@ -12,7 +12,7 @@ POST http://localhost:5050/subType
 Content-Type: application/json
 
 {
-    "type": 2,
+    "typeId": 3,
     "name": "sedan"
 }
 

@@ -8,7 +8,7 @@ export default () => {
 		'SubTypes',
 		{
 			id: { type: INTEGER, primaryKey: true, autoIncrement: true },
-			type: { type: INTEGER, allowNull: false },
+			typeId: { type: INTEGER, allowNull: false },
 			name: { type: STRING, allowNull: false, unique: true },
 		},
 		{ freezeTableName: true, timestamps: true }

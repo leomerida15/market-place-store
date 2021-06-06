@@ -3,8 +3,9 @@ POST http://localhost:5050/auth/register
 Content-Type: application/json
 
 {
-    "email":"compradoadsar@leo.com",
-    "password":"123456"
+    "email":"admaisadasdn@admin.com",
+    "password":"client123.",
+    "typeProfileId": 3
 }
 
 ###

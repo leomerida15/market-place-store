@@ -16,8 +16,8 @@ export const login = async (req: Request<any, intf.User, intf.User>, res: Respon
 		const valid: boolean = await bcrypt.compare(password, info.password);
 		if (!valid) throw { message: 'contraseña incorrecta' };
 
-		const { id, typeProfile } = info;
-		const token: string = jwt.sign({ email, id, typeProfile }, key);
+		const { id, typeProfileId } = info;
+		const token: string = jwt.sign({ email, id, typeProfileId }, key);
 
 		res.status(200).json({ msg: Msg.User(info.id).login, info: { email, id: info.id }, token });
 	} catch (err) {
@@ -31,7 +31,6 @@ export const createUser = async (req: Request<any, intf.User, intf.User>, res: R
 		const { password, email } = req.body;
 		const salt: string = await bcrypt.genSalt(10);
 		req.body.password = await bcrypt.hash(password, salt);
-		req.body.typeProfile = 3;
 
 		await User.create(req.body);
 

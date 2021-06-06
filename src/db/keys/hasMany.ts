@@ -1,11 +1,19 @@
 import { SubType, Type, Product, User, TypeProfile } from '../models';
+import sql from '../index';
 
-export default () => {
+export default async () => {
 	// ejemplo
 
 	// usuarios at Roles_has_usuarios
-	Type.hasMany(SubType, { foreignKey: 'type', onDelete: 'cascade', hooks: true });
-	SubType.hasMany(Product, { foreignKey: 'subType', onDelete: 'cascade', hooks: true });
-	User.hasMany(Product, { foreignKey: 'user', onDelete: 'cascade', hooks: true });
-	TypeProfile.hasMany(User, { foreignKey: 'typeProfile', onDelete: 'cascade', hooks: true });
+	await Type.hasMany(SubType, { as: 'SubTypes', foreignKey: 'typeId' });
+	await SubType.belongsTo(Type, { as: 'type', foreignKey: 'typeId' });
+
+	await SubType.hasMany(Product, { as: 'Products', foreignKey: 'subTypeId' });
+	await Product.belongsTo(SubType, { as: 'subType' });
+
+	await User.hasMany(Product, { foreignKey: 'userId' });
+	await Product.belongsTo(User, { as: 'user' });
+
+	await TypeProfile.hasMany(User, { foreignKey: 'typeProfileId' });
+	await User.belongsTo(TypeProfile, { as: 'typeProfile' });
 };

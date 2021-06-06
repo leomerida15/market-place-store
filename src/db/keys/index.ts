@@ -3,8 +3,8 @@ import hasOne from './hasOne';
 
 export default async () => {
 	try {
-		hasMany();
-		hasOne();
+		await hasMany();
+		// await hasOne();
 	} catch (err) {
 		console.error(err);
 	}

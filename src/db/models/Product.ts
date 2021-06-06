@@ -5,13 +5,13 @@ export default () => {
 	const { INTEGER, STRING, ARRAY } = DataTypes;
 
 	return Sql.define(
-		'Product',
+		'Products',
 		{
 			id: { type: INTEGER, primaryKey: true, autoIncrement: true },
-			subType: { type: INTEGER, allnwNull: true },
+			subTypeId: { type: INTEGER, allnwNull: true },
 			name: { type: STRING, allowNull: false },
 			price: { type: INTEGER, allowNull: false },
-			user: { type: INTEGER, allowNull: false },
+			userId: { type: INTEGER, allowNull: false },
 			imgs: { type: ARRAY(STRING), allowNull: false },
 		},
 		{ freezeTableName: true, timestamps: true }

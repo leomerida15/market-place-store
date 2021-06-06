@@ -1,12 +1,12 @@
 import { NextFunction, Request, Response } from 'express';
-import { SubType } from '../db/models';
+import { Product, SubType } from '../db/models';
 import * as intf from '../config/interfaces';
 import * as Msg from '../hooks/messages/index.ts';
 
 // getters all SubTypes
 export const getSubTypes = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
 	try {
-		const info: intf.SubType[] = await SubType.findAll();
+		const info: intf.SubType[] = await SubType.findAll({ include: { model: Product, as: 'Products' } });
 
 		res.status(200).json({ message: Msg.SubType().getAll, info });
 	} catch (err) {

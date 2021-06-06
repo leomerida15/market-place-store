@@ -11,14 +11,15 @@ export interface db {
 export interface User extends db {
 	email: string;
 	password: string;
-	typeProfile: number;
+	typeProfileId: number;
 }
 
 export interface Product extends db {
 	//
-	subType: number;
+	subTypeId: number;
 	name: string;
 	price: number;
+	userId: number;
 	imgs?: string[];
 }
 
@@ -31,7 +32,7 @@ export interface Type extends db {
 export interface SubType extends db {
 	//
 	name: string;
-	type: number;
+	typeId: number;
 }
 
 export interface TypeProfile extends db {

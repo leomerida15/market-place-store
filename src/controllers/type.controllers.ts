@@ -6,7 +6,7 @@ import * as Msg from '../hooks/messages/index.ts';
 // getters all Types
 export const getTypes = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
 	try {
-		const info: intf.Type[] = await Type.findAll({ include: SubType });
+		const info: intf.Type[] = await Type.findAll({ include: { model: SubType, as: 'subTypes' } });
 
 		res.status(200).json({ message: Msg.Type().getAll, info });
 	} catch (err) {
@@ -30,7 +30,7 @@ export const getType = async (req: Request<intf.id>, res: Response, next: NextFu
 	try {
 		const { id } = req.params;
 
-		const info: intf.Type = await Type.findAll({ where: { id }, include: SubType });
+		const info: intf.Type = await Type.findAll({ where: { id }, include: { model: SubType, as: 'subTypes' } });
 		if (!info) throw { message: `el id: ${id}; no existe en la tabla tipos`, code: 400 };
 
 		const msg: string = Msg.Type(id).get;

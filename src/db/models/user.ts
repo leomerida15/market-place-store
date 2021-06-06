@@ -8,9 +8,19 @@ export default () => {
 		'Users',
 		{
 			id: { type: INTEGER, primaryKey: true, autoIncrement: true },
-			email: { type: STRING, allowNull: false, unique: true },
+			email: {
+				type: STRING,
+				allowNull: false,
+				unique: true,
+				validate: {
+					isEmail: {
+						args: true,
+						msg: 'El campo tiene que ser un correo valido',
+					},
+				},
+			},
 			password: { type: STRING, allowNull: false },
-			typeProfile: { type: INTEGER, allowNull: false },
+			typeProfileId: { type: INTEGER, allowNull: false },
 		},
 		{ freezeTableName: true, timestamps: true }
 	);
