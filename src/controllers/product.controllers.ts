@@ -31,7 +31,7 @@ export const createProduct = async (req: Request<any, any, intf.Product>, res: R
 			}
 		})();
 
-		const data: intf.Product = { ...req.body, imgs };
+		const data: any = { ...req.body, imgs };
 
 		const info: intf.Product = await Product.create(data);
 

@@ -4,6 +4,14 @@ import { host } from '../host';
 import { svg2png, SVG2PNGOptions } from 'svg-png-converter';
 
 const base: string = path.resolve('static');
+
+export const fileExistin = async (folder: string) => {
+	try {
+		await fs.lstat(`${base}/${folder}`);
+	} catch (err) {
+		await fs.mkdir(`${base}/${folder}`);
+	}
+};
 //
 export const ImgSvgToPng = async (preType: string, type: 'png' | 'jpeg', file: string, folder?: string) => {
 	const id: string = ImgID(file);
@@ -26,11 +34,15 @@ export const ImgID = (file: string) => file.split('/')[file.split('/').length - 
 export const ImgIDs = (files: string[]) => files.map((file: string) => file.split('/')[file.split('/').length - 1]);
 //
 export const ImgMove = async (file: string, folder?: string) => {
+	if (folder) await fileExistin(folder);
+
 	await fs.rename(`${base}/${file}`, `${base}/${folder}/${file}`);
 	return `${host}static/${folder ? folder + '/' : ''}${file}`;
 };
 //
-export const ImgMoves = async (files: string[], folder: string) => {
+export const ImgMoves = async (files: string[], folder?: string) => {
+	if (folder) await fileExistin(folder);
+
 	const resp: any = files.map(async (file: string) => await fs.rename(`${base}/${file}`, `${base}/${folder}/${file}`));
 	await Promise.all(resp);
 
