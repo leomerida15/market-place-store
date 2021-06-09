@@ -1,5 +1,5 @@
 import { NextFunction, Request, Response } from 'express';
-import { TypeProfile, User } from '../db/models';
+import { Product, TypeProfile, User } from '../db/models';
 import * as intf from '../config/interfaces';
 import * as Msg from '../hooks/messages/index.ts';
 import bcrypt from 'bcrypt';
@@ -9,7 +9,10 @@ const key: string = 'clave';
 // getters all users
 export const getUsers = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
 	try {
-		const info: intf.User[] = await User.findAll();
+		const info: intf.User[] = await User.findAll({
+			include: [{ model: Product, as: 'Products' }],
+			attributes: { exclude: ['password', 'id'] },
+		});
 
 		res.status(200).json({ message: Msg.User().getAll, info });
 	} catch (err) {
@@ -37,7 +40,10 @@ export const getUser = async (req: Request<intf.id>, res: Response, next: NextFu
 	try {
 		const { id } = req.params;
 
-		const info: intf.User = await User.findAll({ where: { id } });
+		const info: intf.User = await User.findByPk(id, {
+			include: [{ model: Product, as: 'Products' }],
+			attributes: { exclude: ['password', 'id'] },
+		});
 		if (!info) throw { message: `el id: ${id}; no existe en la tabla`, code: 400 };
 
 		const msg: string = Msg.User(id).create;

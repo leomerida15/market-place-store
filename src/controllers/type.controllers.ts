@@ -6,9 +6,24 @@ import * as Msg from '../hooks/messages/index.ts';
 // getters all Types
 export const getTypes = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
 	try {
-		const info: intf.Type[] = await Type.findAll({ include: { model: SubType, as: 'subTypes' } });
+		const info: intf.Type[] = await Type.findAll({ include: { model: SubType, as: 'SubTypes' } });
 
 		res.status(200).json({ message: Msg.Type().getAll, info });
+	} catch (err) {
+		next(err);
+	}
+};
+
+// getter a Type
+export const getType = async (req: Request<intf.id>, res: Response, next: NextFunction): Promise<void> => {
+	try {
+		const { id } = req.params;
+
+		const info: intf.Type = await Type.findByPk(id, { include: { model: SubType, as: 'SubTypes' } });
+		if (!info) throw { message: `el id: ${id}; no existe en la tabla tipos`, code: 400 };
+
+		const msg: string = Msg.Type(id).get;
+		res.status(200).json({ msg, info });
 	} catch (err) {
 		next(err);
 	}
@@ -20,21 +35,6 @@ export const createType = async (req: Request<any, intf.Type>, res: Response, ne
 		const info: intf.Type = await Type.create(req.body);
 
 		res.status(200).json({ msg: Msg.Type(info.id).create, info });
-	} catch (err) {
-		next(err);
-	}
-};
-
-// getter a Type
-export const getType = async (req: Request<intf.id>, res: Response, next: NextFunction): Promise<void> => {
-	try {
-		const { id } = req.params;
-
-		const info: intf.Type = await Type.findAll({ where: { id }, include: { model: SubType, as: 'subTypes' } });
-		if (!info) throw { message: `el id: ${id}; no existe en la tabla tipos`, code: 400 };
-
-		const msg: string = Msg.Type(id).get;
-		res.status(200).json({ msg, info });
 	} catch (err) {
 		next(err);
 	}

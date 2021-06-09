@@ -15,26 +15,26 @@ export const getSubTypes = async (req: Request, res: Response, next: NextFunctio
 };
 
 // getter a SubType
-export const createSubType = async (req: Request<any, intf.SubType>, res: Response, next: NextFunction): Promise<void> => {
+export const getSubType = async (req: Request<intf.id>, res: Response, next: NextFunction): Promise<void> => {
 	try {
-		const info: intf.SubType = await SubType.create(req.body);
+		const { id } = req.params;
 
-		res.status(200).json({ msg: Msg.SubType(info.id).create, info });
+		const info: intf.SubType = await SubType.findByPk(id, { include: { model: Product, as: 'Products' } });
+		if (!info) throw { message: `el id: ${id}; no existe en la tabla tipos`, code: 400 };
+
+		const msg: string = Msg.SubType(id).get;
+		res.status(200).json({ msg, info });
 	} catch (err) {
 		next(err);
 	}
 };
 
 // getter a SubType
-export const getSubType = async (req: Request<intf.id>, res: Response, next: NextFunction): Promise<void> => {
+export const createSubType = async (req: Request<any, intf.SubType>, res: Response, next: NextFunction): Promise<void> => {
 	try {
-		const { id } = req.params;
+		const info: intf.SubType = await SubType.create(req.body);
 
-		const info: intf.SubType = await SubType.findAll({ where: { id } });
-		if (!info) throw { message: `el id: ${id}; no existe en la tabla tipos`, code: 400 };
-
-		const msg: string = Msg.SubType(id).get;
-		res.status(200).json({ msg, info });
+		res.status(200).json({ msg: Msg.SubType(info.id).create, info });
 	} catch (err) {
 		next(err);
 	}
