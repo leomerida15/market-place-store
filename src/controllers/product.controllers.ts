@@ -23,7 +23,7 @@ export const createProduct = async (req: Request<any, any, intf.Product>, res: R
 				const routesIMG: string[] = ImgRoutes(req.files, 'zones');
 				const ids = ImgIDs(routesIMG);
 				//
-				const urls: string[] = await ImgMoves(ids, 'zones');
+				const urls: string[] = await ImgMoves(ids, 'products');
 
 				return urls;
 			} else {

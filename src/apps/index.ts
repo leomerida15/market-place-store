@@ -2,6 +2,7 @@
 import express, { Application, Request, Response } from 'express';
 import { posRoutes, preRoutes } from '../Middlewares';
 import Routes from '../routes';
+import path from 'path';
 
 const app: Application = express();
 
@@ -14,6 +15,8 @@ app.use(express.json());
 
 // Routes
 Routes(app);
+app.use('/static', express.static(path.resolve('static')));
+app.use('/static/products', express.static(path.resolve('static/products')));
 
 // meddleware posRutes
 posRoutes(app);
